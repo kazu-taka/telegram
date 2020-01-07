@@ -1,8 +1,21 @@
-<div class="col-8 mx-auto">
-  <%= render "shared/errors", obj: @comment %>
+<div class="col-lg-10 mx-auto">
+  <div class="row pb-5">
+    <div class="col-4 text-center">
+      <%= image_tag @user.avatar.variant(combine_options: { resize: "150x150^", crop: "150x150+0+0", gravity: :center }).processed, class: "img-thumbnail rounded-circle" %>
+    </div>
+    <div class="col-8">
+      <h1><%= @user.username %></h1>
+      <%= @user.description %>
+      <% if @user.id == current_user.id %>
+        <p><%= link_to t(".edit"), edit_user_registration_path(@user) %></p>
+      <% end %>
+    </div>
+  </div>
   <div class="post">
-    <%= render @posts %>
-    <%= paginate @posts %>
+    <div class="row">
+      <%= render partial: "users/post", collection: @posts %>
+      <%= paginate @posts %>
+    </div>
   </div>
 </div>
 
@@ -10,8 +23,7 @@
   $(window).on('scroll', function() {
       // 画面スクロールの判定用の変数を用意
       scrollHeight = $(document).height();
-      scrollPosition = $(window).height() + $(window).scrollTop();
-
+      scrollPosition = $(window).height() $(window).scrollTop();
       // 画面のスクロールが下部10%以下になったら
       if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.1) {
         // .postに対し、jscrollを発火
