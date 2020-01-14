@@ -1,9 +1,21 @@
+# == Schema Information
+#
+# Table name: posts
+#
+#  id         :bigint           not null, primary key
+#  caption    :text(65535)      not null
+#  user_id    :bigint
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Post < ApplicationRecord
   paginates_per 5
 
   has_one_attached :image
   belongs_to :user
   has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
   attribute :new_image
   validates :caption, presence: true
   validate :new_image_check
